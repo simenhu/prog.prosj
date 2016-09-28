@@ -25,85 +25,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-      <file leaf-file-name="stoneRockPaper.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/oving2/stoneRockPaper.py">
+      <file leaf-file-name="koder.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/oving3/koder.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="572">
-              <caret line="239" column="0" selection-start-line="239" selection-start-column="0" selection-end-line="239" selection-end-column="0" />
-              <folding>
-                <element signature="e#88#1053#0" expanded="false" />
-                <element signature="e#191#329#0" expanded="false" />
-                <element signature="e#368#441#0" expanded="false" />
-                <element signature="e#480#751#0" expanded="false" />
-                <element signature="e#790#814#0" expanded="false" />
-                <element signature="e#852#881#0" expanded="false" />
-                <element signature="e#920#967#0" expanded="false" />
-                <element signature="e#1006#1053#0" expanded="false" />
-                <element signature="e#1074#1294#0" expanded="false" />
-                <element signature="e#1127#1143#0" expanded="false" />
-                <element signature="e#1182#1186#0" expanded="false" />
-                <element signature="e#1244#1248#0" expanded="false" />
-                <element signature="e#1278#1294#0" expanded="false" />
-                <element signature="e#1330#1483#0" expanded="false" />
-                <element signature="e#1358#1410#0" expanded="false" />
-                <element signature="e#1449#1483#0" expanded="false" />
-                <element signature="e#1520#1757#0" expanded="false" />
-                <element signature="e#1548#1635#0" expanded="false" />
-                <element signature="e#1673#1757#0" expanded="false" />
-                <element signature="e#1798#2282#0" expanded="false" />
-                <element signature="e#1826#1950#0" expanded="false" />
-                <element signature="e#1989#2190#0" expanded="false" />
-                <element signature="e#2088#2134#0" expanded="false" />
-                <element signature="e#2248#2282#0" expanded="false" />
-                <element signature="e#2321#4081#0" expanded="false" />
-                <element signature="e#2359#2674#0" expanded="false" />
-                <element signature="e#2722#2839#0" expanded="false" />
-                <element signature="e#2897#3256#0" expanded="false" />
-                <element signature="e#2934#3037#0" expanded="false" />
-                <element signature="e#3111#3231#0" expanded="false" />
-                <element signature="e#3315#3463#0" expanded="false" />
-                <element signature="e#3502#4081#0" expanded="false" />
-                <element signature="e#3834#3921#0" expanded="false" />
-                <element signature="e#3873#3921#0" expanded="false" />
-                <element signature="e#4115#4252#0" expanded="false" />
-                <element signature="e#4143#4191#0" expanded="false" />
-                <element signature="e#4230#4252#0" expanded="false" />
-                <element signature="e#4279#5531#0" expanded="false" />
-                <element signature="e#4414#4496#0" expanded="false" />
-                <element signature="e#4527#5179#0" expanded="false" />
-                <element signature="e#4680#4804#0" expanded="false" />
-                <element signature="e#4849#4974#0" expanded="false" />
-                <element signature="e#5019#5144#0" expanded="false" />
-                <element signature="e#5212#5531#0" expanded="false" />
-                <element signature="e#5565#6398#0" expanded="false" />
-                <element signature="e#5619#5784#0" expanded="false" />
-                <element signature="e#5815#6398#0" expanded="false" />
-                <element signature="e#5855#6348#0" expanded="false" />
-                <element signature="e#5995#6064#0" expanded="false" />
-                <element signature="e#6416#6551#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="random.py" pinned="false" current-in-tab="false">
-        <entry file="file:///usr/lib/python3.5/random.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4642">
-              <caret line="217" column="0" selection-start-line="217" selection-start-column="0" selection-end-line="217" selection-end-column="0" />
+            <state relative-caret-position="44">
+              <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/oving2/test.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="66">
-              <caret line="4" column="18" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
-              <folding>
-                <element signature="e#0#13#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -123,6 +50,7 @@
         <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/stoneRockPaper.py" />
         <option value="$PROJECT_DIR$/oving2/stoneRockPaper.py" />
+        <option value="$PROJECT_DIR$/oving3/koder.py" />
       </list>
     </option>
   </component>
@@ -893,24 +821,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/oving2/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="4" column="18" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/lib/python3.5/random.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4642">
-          <caret line="217" column="0" selection-start-line="217" selection-start-column="0" selection-end-line="217" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/oving2/stoneRockPaper.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="572">
@@ -967,6 +877,32 @@
             <element signature="e#5995#6064#0" expanded="false" />
             <element signature="e#6416#6551#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/lib/python3.5/random.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="385">
+          <caret line="217" column="0" selection-start-line="217" selection-start-column="0" selection-end-line="217" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/oving2/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="4" column="18" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/oving3/koder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>

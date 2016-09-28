@@ -1,4 +1,5 @@
 #Cipher, Person, Sender, og Receiver
+#nå skriver jeg en random ting som skal endres
 import random as rd
 
 class Cipher():
