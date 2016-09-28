@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a7d8bf6f-c17a-4ca3-9d6f-228f881e7450" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="prog.prosj.iws" />
@@ -430,6 +429,14 @@
       <option name="presentableId" value="Default" />
       <updated>1473943702983</updated>
     </task>
+    <task id="LOCAL-00001" summary="endringer i noen filer jeg ikke skjønner noe av">
+      <created>1475088694514</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1475088694514</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -466,6 +473,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="endringer i noen filer jeg ikke skjønner noe av" />
+    <option name="LAST_COMMIT_MESSAGE" value="endringer i noen filer jeg ikke skjønner noe av" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
