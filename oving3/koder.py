@@ -3,10 +3,8 @@
 import random as rd
 
 class Cipher():
-    def __init__(self):
-        self.chars = [chr(x) for x in range(32,127)]
-        self.char_count = len(self.chars)
-
+    chars = [chr(x) for x in range(32, 127)]
+    char_count = len(chars)
 
     def encode(self):
         pass
@@ -20,25 +18,52 @@ class Cipher():
     def generate_keys(self):
         pass
 
-class Caesar_Cipher(Cipher):
-    def __init__(self, offset):
-        self.offset = offset
+    def set_key(self, key):
+        pass
 
+class Caesar_Cipher(Cipher):
+    def __init__(self, offset=None):
+        if(offset == None):
+            self.offset = self.generate_keys()
+        else:
+            self.offset = offset
     def encode(self, data):
-        data = "dette er en test"
-        return [self.chars[(self.chars.index(x)+self.offset)%self.char_count] for x in data]
+
+        return "".join([self.chars[(self.chars.index(x)+self.offset)%self.char_count] for x in data])
 
     def decode(self, data):
-        return [self.chars[self.chars.index(x)+(self.char_count-self.offset)]%self.char_count for x in data]
+
+
+        return "".join([self.chars[(self.chars.index(x)+(self.char_count-self.offset))%self.char_count] for x in data])
 
     def verify(self):
-        test_string = "dette er en teststreng som er kul"
-            #"".join([chr(rd.randint(32, 127)) for x in range(0, 10)])
+        test_string = "".join([chr(rd.randint(32, 126)) for x in range(0, 10)])
         print("Test string is:%s"%test_string)
         encoded = self.encode(test_string)
         print("Encoded string is%s"%encoded)
         decoded = self.decode(encoded)
         print("Decoded string is:%s"%decoded)
+        if(decoded==test_string):
+            print ("text was transfered sucsessfully")
+
+    def generate_keys(self):
+        return rd.randint(0,94)
+
+    def set_key(self,key):
+        self.offset = key
+
+class Multiplicative(Cipher):
+    def __init__(self):
+        self.encode_key = None
+
+    def encode(self, data):
+        pass
+    def decode(self, data):
+        pass
+    def generate_keys(self):
+        pass
+    def set_key(self, key):
+        pass
 
 class Person():
 
@@ -51,15 +76,15 @@ class Person():
 
     def set_key(self,key):
         self.key = key
+        self.cipher.set_key(key)
 
     def operate_cipher(self):
-        pass
+        passs
 
 class Sender(Person):
 
-    def __init__(self, cipher, key):
-        super(Sender, self).__init__(self, cipher, key)
-        pass
+    def __init__(self, cipher):
+        super(Sender, self).__init__(cipher, cipher.generate_keys())
 
     def operate_cipher(self, data):
         return self.cipher.encode(data)
@@ -67,17 +92,30 @@ class Sender(Person):
 class Reciever(Person):
 
     def __init__(self, cipher, key):
-        super(Reciever, self).__init__(self, cipher, key)
+        super(Reciever, self).__init__(cipher, key)
 
     def operate_cipher(self, data):
         return self.cipher.decode(data)
+
 
 
 class Hacker():
     pass
 
 def main():
-    cipher = None
-    sender = Sender(cipher,)
-    reciecer = Reciever(cipher)
+    cipher = Caesar_Cipher()
+    sender = Sender(cipher)
+    reciecer = Reciever(cipher, sender.get_key())
+    input_text = input("write your message \n>>>")
 
+    while input_text != "exit":
+        encoded_text = sender.operate_cipher(input_text)
+        print("The encoded text is: %s"%encoded_text)
+        decoded_text = reciecer.operate_cipher(encoded_text)
+        print("The decoded text is: %s"%decoded_text)
+        reciecer.set_key(sender.get_key())
+        input_text = input("write your message \n>>>")
+    print("Goodbye, your secrets has been kept safe!")
+
+if __name__ == '__main__':
+    main()
