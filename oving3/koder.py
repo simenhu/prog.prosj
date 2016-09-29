@@ -79,7 +79,7 @@ class Person():
         self.cipher.set_key(key)
 
     def operate_cipher(self):
-        passs
+        pass
 
 class Sender(Person):
 
