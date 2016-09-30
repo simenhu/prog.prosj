@@ -141,7 +141,7 @@ class Hacker():
 def main():
 
     sender = Sender(Multiplicative())
-    reciever = Reciever(Multiplicative, sender.get_key())
+    reciever = Reciever(Multiplicative(), sender.get_key())
     input_text = input("write your message \n>>>")
 
     while input_text != "exit":
