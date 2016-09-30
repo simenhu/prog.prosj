@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="a7d8bf6f-c17a-4ca3-9d6f-228f881e7450" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/oving3/koder.py" afterPath="$PROJECT_DIR$/oving3/koder.py" />
     </list>
     <ignored path="prog.prosj.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -610,7 +609,14 @@
       <option name="project" value="LOCAL" />
       <updated>1475229168191</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Affine finished">
+      <created>1475242268895</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1475242268895</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TodoView">
@@ -680,7 +686,8 @@
     <MESSAGE value="trying to make all ting work" />
     <MESSAGE value="Caecar is finnished, 2" />
     <MESSAGE value="FIxed method call in Reciever" />
-    <option name="LAST_COMMIT_MESSAGE" value="FIxed method call in Reciever" />
+    <MESSAGE value="Affine finished" />
+    <option name="LAST_COMMIT_MESSAGE" value="Affine finished" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
