@@ -25,6 +25,7 @@ class Cipher():
 
     def set_key(self):
         pass
+
 class Caesar_Cipher(Cipher):
     def __init__(self, offset=None):
         if(offset == None):
@@ -130,7 +131,7 @@ class Affine(Cipher):
     def decode(self,data, key = None):
         if key == None:
             key = self.decode_key
-        caecar_uncrypt = self.caecar.decode(key[1])
+        caecar_uncrypt = self.caecar.decode(data, key[1])
         affine_uncrypt = self.mult.decode(caecar_uncrypt, key[0])
         return affine_uncrypt
 
@@ -147,10 +148,30 @@ class Affine(Cipher):
         if (decoded == test_string):
             print("text was transfered sucsessfully")
 
+class Ubreakable(Cipher):
+
+    #this class takes a string as argument for the constructor
+    def __init__(self, key = None):
+        self.generate_keys(key)
+    def encode(self):
+        pass
+    def decode(self, key = None):
+        pass
+    def generate_keys(self, key = None):
+        if key == None:
+            key = "".join([chr(rd.randint(32,127)) for x in range(5,10)])
+        self.encode_key =
+    def get_key(self):
+        pass
+    def set_key(self):
+        pass
+    def verify(self):
+        pass
 
 class Person():
 
     def __init__(self, cipher, key):
+
         self.key = key
         self.cipher = cipher
 
@@ -181,16 +202,14 @@ class Reciever(Person):
     def operate_cipher(self, data):
         return self.cipher.decode(data ,self.key)
 
-
-
 class Hacker():
     pass
 
 def main():
 
-    sender = Sender(Multiplicative())
-    print("sender key(decode key): %d"%sender.get_key())
-    reciever = Reciever(Multiplicative(), sender.get_key())
+    sender = Sender(Affine())
+
+    reciever = Reciever(Affine(), sender.get_key())
     input_text = input("write your message \n>>>")
 
     while input_text != "exit":
@@ -202,8 +221,8 @@ def main():
     print("Goodbye, your secrets has been kept safe!")
 
 def test():
-    mult = Affine()
-    mult.verify()
+    affine = Affine()
+    affine.verify()
 
 if __name__ == '__main__':
-    test()
+    main()
