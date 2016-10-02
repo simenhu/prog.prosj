@@ -148,25 +148,55 @@ class Affine(Cipher):
         if (decoded == test_string):
             print("text was transfered sucsessfully")
 
-class Ubreakable(Cipher):
+class Unbreakable(Cipher):
 
     #this class takes a string as argument for the constructor
     def __init__(self, key = None):
+        """
+
+        :param key: takes a string and sets the Cipher's encode_key and decode_key
+        """
         self.generate_keys(key)
-    def encode(self):
-        pass
-    def decode(self, key = None):
-        pass
+    def encode(self, data: str) -> str:
+        encode_string = ""
+        encoded_string = ""
+        while len(encode_string) < len(data):
+            encode_string += self.encode_key
+        for i in range(len(data)):
+            encoded_string += self.chars[(self.chars.index(data[i])+self.chars.index(encode_string[i]))%95]
+        return encoded_string
+    def decode(self, data, key = None):
+        if key == None:
+            key = self.decode_key
+        decode_string = ""
+        decoded_string = ""
+        while len(decode_string) < len(data):
+            decode_string += key
+        for i in range(len(data)):
+            decoded_string += self.chars[(self.chars.index(data[i]) + self.chars.index(decode_string[i])) % 95]
+        return decoded_string
+
     def generate_keys(self, key = None):
         if key == None:
             key = "".join([chr(rd.randint(32,127)) for x in range(5,10)])
-        self.encode_key =
+        self.encode_key = key
+        self.decode_key = ""
+        for n in key:
+            self.decode_key += self.chars[(95 - self.chars.index(n)) % 95]
+
     def get_key(self):
-        pass
-    def set_key(self):
-        pass
+        return self.decode_key
+    def set_key(self, key):
+        self.generate_keys(key)
     def verify(self):
-        pass
+        test_string = "".join([chr(rd.randint(32, 126)) for x in range(0, 10)])
+        print("Test string is:%s" % test_string)
+        encoded = self.encode(test_string)
+        print("Encoded string is%s" % encoded)
+        decoded = self.decode(encoded)
+        print("Decoded string is:%s" % decoded)
+        if decoded == test_string:
+            print("text was transfered sucsessfully")
 
 class Person():
 
@@ -207,9 +237,9 @@ class Hacker():
 
 def main():
 
-    sender = Sender(Affine())
+    sender = Sender(Unbreakable())
 
-    reciever = Reciever(Affine(), sender.get_key())
+    reciever = Reciever(Unbreakable(), sender.get_key())
     input_text = input("write your message \n>>>")
 
     while input_text != "exit":
@@ -221,8 +251,8 @@ def main():
     print("Goodbye, your secrets has been kept safe!")
 
 def test():
-    affine = Affine()
-    affine.verify()
+    unbreak = Unbreakable()
+    unbreak.verify()
 
 if __name__ == '__main__':
     main()
