@@ -156,7 +156,17 @@ class Unbreakable(Cipher):
 
         :param key: takes a string and sets the Cipher's encode_key and decode_key
         """
+        self.english_Words = []
+        try:
+            f = open("english_Words.txt", "r")
+            for line in f:
+                self.english_Words.append(str(line.strip()))
+
+            f.close()
+        except:
+            print("something went wrong when opening the file")
         self.generate_keys(key)
+
     def encode(self, data: str) -> str:
         encode_string = ""
         encoded_string = ""
@@ -178,7 +188,8 @@ class Unbreakable(Cipher):
 
     def generate_keys(self, key = None):
         if key == None:
-            key = "".join([chr(rd.randint(32,127)) for x in range(5,10)])
+            key = self.english_Words[rd.randint(0,len(self.english_Words))-1]
+        print("the key of unbreakable is: %s"%key)
         self.encode_key = key
         self.decode_key = ""
         for n in key:
@@ -288,7 +299,7 @@ class Reciever(Person):
         return self.cipher.decode(data ,self.key)
 
 class Hacker(Person):
-
+    chars = [chr(x) for x in range(32, 127)]
     def __init__(self, cipher):
         self.cipher = cipher
         self.english_Words = []
@@ -317,18 +328,44 @@ class Hacker(Person):
         elif isinstance(self.cipher, Multiplicative):
             key = 0
             while not is_hacked:
+                key += 1
+                print("Key: %d" % key)
                 if self.is_English_Words(self.cipher.decode(data, key)):
                     is_hacked = True
                     print("Cipher was hacked. The text was: %s" % (self.cipher.decode(data, key)))
-                key += 1
-                print("Key: %d" % key)
-                if key > 500:
+                if key > 501:
                     print("Cipher was unhackable")
                     break
+
         elif isinstance(self.cipher, Affine):
-            pass
+            key = [0,0]
+            while not is_hacked:
+                key[1] += 1
+                print("Key mult: %d, key caecar: %d"%(key[0], key[1]))
+                if self.is_English_Words(self.cipher.decode(data, key)):
+                    is_hacked = True
+                    print("Cipher was hacked. The text was: %s" % (self.cipher.decode(data, key)))
+                if key[1] > 100:
+                    key[1] = 0
+                    key[0]+=1
+                if key[0] > 501 and key[1] > 100:
+                    print("Cipher was unhackable")
+                    break
+
         elif isinstance(self.cipher, Unbreakable):
-            pass
+            key = 0
+            while not is_hacked:
+                key += 1
+                print("Key: %s" % self.english_Words[key])
+                if key > len(self.english_Words)-1:
+                    print("Cipher was unhackable")
+                    break
+                decode_key = ""
+                for n in self.english_Words[key]:
+                    decode_key += self.chars[(95 - self.chars.index(n)) % 95]
+                if self.is_English_Words(self.cipher.decode(data, decode_key)):
+                    is_hacked = True
+                    print("Cipher was hacked. The text was: %s" % (self.cipher.decode(data, decode_key)))
         else:
             print("Cipher was neither of hackable ciphers")
 
@@ -338,9 +375,11 @@ class Hacker(Person):
         :param data: str of words
         :return: boolean (all words are english)
         """
-        words = data.split()
+
         words = data.split()
         is_English_Words = True
+        if len(words)==0:
+            is_English_Words = False
         for word in words:
             if word not in self.english_Words:
                 is_English_Words = False
@@ -349,10 +388,10 @@ class Hacker(Person):
 
 def main():
 
-    sender = Sender(Multiplicative())
-    hacker = Hacker(Multiplicative())
-    reciever = Reciever(Multiplicative(), sender.get_key())
-    print("the senders key is: %d"%sender.get_key())
+    sender = Sender(Unbreakable())
+    hacker = Hacker(Unbreakable())
+    reciever = Reciever(Unbreakable(), sender.get_key())
+
     input_text = input("write your message \n>>>")
 
     while input_text != "exit":
