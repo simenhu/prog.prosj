@@ -36,7 +36,7 @@ class Caesar_Cipher(Cipher):
 
         return "".join([self.chars[(self.chars.index(x)+self.offset)%self.char_count] for x in data])
 
-    def decode(self, data, key):
+    def decode(self, data, key = None):
             if key == None:
                 key=self.offset
             return "".join([self.chars[(self.chars.index(x)+(self.char_count-key))%self.char_count] for x in data])
@@ -291,27 +291,83 @@ class Hacker(Person):
 
     def __init__(self, cipher):
         self.cipher = cipher
+        self.english_Words = []
+        try:
+            f = open("english_Words.txt", "r")
+            for line in f:
+                self.english_Words.append(str(line.strip()))
+
+            f.close()
+        except:
+            print("something went wrong when opening the file")
 
     def hack(self, data):
+        is_hacked = False
+        if isinstance(self.cipher, Caesar_Cipher):
+            key = 0
+            while not is_hacked:
+                if self.is_English_Words(self.cipher.decode(data, key)):
+                    is_hacked = True
+                    print("Cipher was hacked. The text was: %s"%(self.cipher.decode(data, key)))
+                key +=1
+                print("Key: %d"%key)
+                if key > 95:
+                    print("Cipher was unhackable")
+                    break
+        elif isinstance(self.cipher, Multiplicative):
+            key = 0
+            while not is_hacked:
+                if self.is_English_Words(self.cipher.decode(data, key)):
+                    is_hacked = True
+                    print("Cipher was hacked. The text was: %s" % (self.cipher.decode(data, key)))
+                key += 1
+                print("Key: %d" % key)
+                if key > 500:
+                    print("Cipher was unhackable")
+                    break
+        elif isinstance(self.cipher, Affine):
+            pass
+        elif isinstance(self.cipher, Unbreakable):
+            pass
+        else:
+            print("Cipher was neither of hackable ciphers")
+
+    def is_English_Words(self, data):
+        """
+        Checks if the insput string only contains words from the english language
+        :param data: str of words
+        :return: boolean (all words are english)
+        """
+        words = data.split()
+        words = data.split()
+        is_English_Words = True
+        for word in words:
+            if word not in self.english_Words:
+                is_English_Words = False
+                break
+        return is_English_Words
 
 def main():
 
-    sender = Sender(RSA())
-
-    reciever = Reciever(RSA(), sender.get_key())
+    sender = Sender(Multiplicative())
+    hacker = Hacker(Multiplicative())
+    reciever = Reciever(Multiplicative(), sender.get_key())
+    print("the senders key is: %d"%sender.get_key())
     input_text = input("write your message \n>>>")
 
     while input_text != "exit":
         encoded_text = sender.operate_cipher(input_text)
         print("The encoded text is: %s"%encoded_text)
+        hacker.hack(encoded_text)
         decoded_text = reciever.operate_cipher(encoded_text)
         print("The decoded text is: %s"%decoded_text)
         input_text = input("write your message \n>>>")
     print("Goodbye, your secrets has been kept safe!")
 
 def test():
-    unbreak = RSA()
-    unbreak.verify()
+    hacker = Hacker(Caesar_Cipher())
+    print(hacker.english_Words)
+    print(hacker.is_English_Words("boat"))
 
 if __name__ == '__main__':
     main()
