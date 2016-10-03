@@ -287,8 +287,12 @@ class Reciever(Person):
     def operate_cipher(self, data):
         return self.cipher.decode(data ,self.key)
 
-class Hacker():
-    pass
+class Hacker(Person):
+
+    def __init__(self, cipher):
+        self.cipher = cipher
+
+    def hack(self, data):
 
 def main():
 
