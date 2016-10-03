@@ -2,7 +2,7 @@
 #nå skriver jeg en random ting som skal endres
 import random as rd
 import crypto_utils
-from math import gcd
+from math import gcd, pow
 
 class Cipher():
     chars = [chr(x) for x in range(32, 127)]
@@ -198,6 +198,61 @@ class Unbreakable(Cipher):
         if decoded == test_string:
             print("text was transfered sucsessfully")
 
+class RSA(Cipher):
+    def __init__(self):
+        self.generate_keys()
+
+    def encode(self, data):
+        blocks = crypto_utils.blocks_from_text(data,1)
+        print("string values before encoded", end= "")
+        print(blocks)
+        encrypted_blocks = []
+        for n in blocks:
+            encrypted_blocks.append((n**self.encode_key[1])%self.encode_key[0])
+        return encrypted_blocks
+
+    def decode(self, data, key = None):
+        if key == None:
+            key = self.decode_key
+        encrypted_blocks = data
+        decoded_blocks = []
+        for n in encrypted_blocks:
+            decoded_blocks.append((n**key[1]) % key[0])
+
+        return crypto_utils.text_from_blocks(decoded_blocks, 1)
+
+    def verify(self):
+        test_string = "".join([chr(rd.randint(32, 126)) for x in range(0, 10)])
+        print("Test string is:%s" % test_string)
+        encoded = self.encode(test_string)
+        print("Encoded string is%s" % encoded)
+        decoded = self.decode(encoded)
+        print("Decoded string is:%s" % decoded)
+        if (decoded == test_string):
+            print("text was transfered sucsessfully")
+
+    def generate_keys(self):
+        gcd_value = 0
+        while gcd_value != 1:
+            p = crypto_utils.generate_random_prime(8)
+            q = crypto_utils.generate_random_prime(8)
+            while q==p:
+                q = crypto_utils.generate_random_prime(8)
+            n = p*q
+            phi = (p-1)*(q-1)
+            e = rd.randint(3, phi-1)
+            gcd_value  = gcd(e, phi)
+        print("The primes that is chosen is %d and %d "%(p,q))
+        d = crypto_utils.modular_inverse(e, phi)
+        self.encode_key = (n, e)
+        self.decode_key = (n, d)
+
+
+    def get_key(self):
+        return self.decode_key
+    def set_key(self, key):
+        self.decode_key = key
+
 class Person():
 
     def __init__(self, cipher, key):
@@ -237,9 +292,9 @@ class Hacker():
 
 def main():
 
-    sender = Sender(Unbreakable())
+    sender = Sender(RSA())
 
-    reciever = Reciever(Unbreakable(), sender.get_key())
+    reciever = Reciever(RSA(), sender.get_key())
     input_text = input("write your message \n>>>")
 
     while input_text != "exit":
@@ -251,7 +306,7 @@ def main():
     print("Goodbye, your secrets has been kept safe!")
 
 def test():
-    unbreak = Unbreakable()
+    unbreak = RSA()
     unbreak.verify()
 
 if __name__ == '__main__':
