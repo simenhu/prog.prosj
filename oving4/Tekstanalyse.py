@@ -9,13 +9,21 @@ class Text_Reader():
                 return_list+=string.split()
         return list(set(return_list))
 
+class prune_reader(Text_Reader):
+    def read_Text(self, file):
+        words = super().read_Text(file)
+        with open("data/stop_words.txt") as f:
+            for line in f:
+                if line.strip() in words:
+                    words.remove(line.strip())
+        return words
 class Text_Analyzer:
-    def __init__(self, folder):
+    def __init__(self, folder, reader = Text_Reader() ):
         """
         Mother class for all analyser classes. This class only cares about the popularityof the words
         :param folder: the folder where the negative and poisitive text's are located
         """
-        self.reader = Text_Reader()
+        self.reader = reader
         self.folder = folder
         self.positive_word_count = {}
         self.negative_word_count = {}
@@ -69,10 +77,16 @@ class Text_Classifier():
         pass
 
 def test(file):
-    analyzer = Text_Analyzer("data/subset/train/")
-    analyzer.analyze_Text()
-    sort = sorted(analyzer.positive_popularity.items(), key = operator.itemgetter(1))
-    print(sort[-25:])
+    analyzer_1 = Text_Analyzer("data/subset/train/", prune_reader())
+    analyzer_2 = Text_Analyzer("data/subset/train/")
+    analyzer_1.analyze_Text()
+    analyzer_2.analyze_Text()
+    sort_1 = sorted(analyzer_1.positive_popularity.items(), key = operator.itemgetter(1), reverse = True)
+    sort_2 = sorted(analyzer_2.positive_popularity.items(), key = operator.itemgetter(1), reverse = True)
+    print(sort_1[:25])
+    print(sort_2[:25])
+
+
 
 
 def main():
