@@ -36,8 +36,8 @@ class Caesar_Cipher(Cipher):
 
         return "".join([self.chars[(self.chars.index(x)+self.offset)%self.char_count] for x in data])
 
-    def decode(self, data, key = None):
-            if key == None:
+    def decode(self, data, key=None):
+            if not key:
                 key=self.offset
             return "".join([self.chars[(self.chars.index(x)+(self.char_count-key))%self.char_count] for x in data])
 
