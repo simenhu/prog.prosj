@@ -1,13 +1,16 @@
 import re, os, operator, math
 from matplotlib import pyplot as plt
+
+
 class Text_Reader():
     def read_Text(self, file):
         return_list = []
-        with open(file,mode="r") as f:
+        with open(file, mode="r") as f:
             for line in f:
-                string = re.sub("[^A-Za-z0-9 \']","",line).lower()
-                return_list+=string.split()
+                string = re.sub("[^A-Za-z0-9 \']", "", line).lower()
+                return_list += string.split()
         return list(set(return_list))
+
 
 class Filter_Reader(Text_Reader):
     def read_Text(self, file):
@@ -18,8 +21,9 @@ class Filter_Reader(Text_Reader):
                     words.remove(line.strip())
         return words
 
+
 class n_grams_reader(Text_Reader):
-    def __init__(self, n = 0):
+    def __init__(self, n=0):
         self.n = n
 
     def read_Text(self, file):
@@ -27,7 +31,7 @@ class n_grams_reader(Text_Reader):
         new_text = [x for x in text]
         if self.n > 0:
             for index in range(len(text)):
-                n_gram = "-".join(text[index:(index+self.n)])
+                n_gram = "-".join(text[index:(index + self.n)])
                 new_text.append(n_gram)
 
         with open("data/stop_words.txt") as f:
@@ -38,10 +42,8 @@ class n_grams_reader(Text_Reader):
         return new_text
 
 
-
 class Text_Analyzer():
-
-    def __init__(self, folder, reader = Text_Reader() ):
+    def __init__(self, folder, reader=Text_Reader()):
         """
         Mother class for all analyzer classes. This class only cares about the popularityof the words
         :param folder: the folder where the negative and poisitive text's are located
@@ -60,17 +62,17 @@ class Text_Analyzer():
         words and their popularity
         :return: dict positive_word_count, dict negative_word_count
         """
-        #first we iterate through every positive review and count all words
+        # first we iterate through every positive review and count all words
         for filename in os.listdir(self.folder + "/pos/"):
             self.positive_reviews += 1
-            print("positive analyzed: %d"%self.positive_reviews)
+            print("positive analyzed: %d" % self.positive_reviews)
             for word in self.reader.read_Text(self.folder + "/pos/" + filename):
                 try:
-                    self.positive_word_count[word]+=1
+                    self.positive_word_count[word] += 1
                 except:
                     self.positive_word_count[word] = 1
 
-        #we iterate throug every negative review and count the words
+        # we iterate throug every negative review and count the words
         for filename in os.listdir(self.folder + "/neg/"):
             print("negative analyzed: %d" % self.negative_reviews)
             self.negative_reviews += 1
@@ -90,7 +92,7 @@ class Text_Analyzer():
 
 
 class Popularity_analyzer(Text_Analyzer):
-    def __init__(self, folder, reader = Text_Reader()):
+    def __init__(self, folder, reader=Text_Reader()):
         super(Popularity_analyzer, self).__init__(folder, reader)
         self.positive_popularity = {}
         self.negative_popularity = {}
@@ -114,10 +116,8 @@ class Popularity_analyzer(Text_Analyzer):
         return self.negative_popularity
 
 
-
-
 class Information_analyzer(Text_Analyzer):
-    def __init__(self, folder, reader = n_grams_reader(0)):
+    def __init__(self, folder, reader=n_grams_reader(0)):
         """
 
         :param folder: path to the folder where the trainingdata is
@@ -128,41 +128,41 @@ class Information_analyzer(Text_Analyzer):
         self.negative_information = {}
 
     def analyze_Text(self):
-        #Function iterates through words ini positive_word_count and calculate its positive information rating
+        # Function iterates through words ini positive_word_count and calculate its positive information rating
         super().analyze_Text()
         counter = 0
         for key, item in self.positive_word_count.items():
-            counter+=1
+            counter += 1
             if key in self.negative_word_count:
-                self.positive_information[key] = item/(item+self.negative_word_count[key])
+                self.positive_information[key] = item / (item + self.negative_word_count[key])
             else:
                 self.positive_information[key] = 1
 
         counter = 0
         # Function iterates through words ini negative_word_count and calculate its negative information rating
         for key, item in self.negative_word_count.items():
-            counter+=1
+            counter += 1
             if key in self.positive_word_count:
                 self.negative_information[key] = item / (item + self.positive_word_count[key])
             else:
                 self.negative_information[key] = 1
 
-    def prune(self,percentage):
+    def prune(self, percentage):
         """
         Removes the words from positive- and negative information that isn't used more that the percentage
         :param percentage: percentage limit
         :return:alters objects list
         """
-        #we prune the positive words from positive_interest
+        # we prune the positive words from positive_interest
         for key in list(self.positive):
-            value =  self.positive_word_count[key]/(self.positive_reviews+self.negative_reviews)
-            if value < percentage/100:
+            value = self.positive_word_count[key] / (self.positive_reviews + self.negative_reviews)
+            if value < percentage / 100:
                 del self.positive_information[key]
 
-        #we prune the negative words from negative_interest
+        # we prune the negative words from negative_interest
         for key in list(self.negative):
-            value =  self.negative_word_count[key]/(self.positive_reviews+self.negative_reviews)
-            if value < percentage/100:
+            value = self.negative_word_count[key] / (self.positive_reviews + self.negative_reviews)
+            if value < percentage / 100:
                 del self.negative_information[key]
 
     @property
@@ -173,9 +173,9 @@ class Information_analyzer(Text_Analyzer):
     def negative(self):
         return self.negative_information
 
-class Text_Classifier():
 
-    def __init__(self, positive_inf, negative_inf , reader = n_grams_reader(3)):
+class Text_Classifier():
+    def __init__(self, positive_inf, negative_inf, reader=n_grams_reader(3)):
         self.negative_inf = negative_inf
         self.positive_inf = positive_inf
         self.reader = reader
@@ -191,21 +191,19 @@ class Text_Classifier():
         punishment = 0.02
 
         for file in os.listdir(folder):
-            words = self.reader.read_Text(folder+"/"+file)
+            words = self.reader.read_Text(folder + "/" + file)
             pos_value = 0
             neg_value = 0
             for word in words:
                 if word in self.positive_inf:
-                    pos_value += math.log(self.positive_inf[word],2)
+                    pos_value += math.log(self.positive_inf[word], 2)
                 else:
-                    pos_value += math.log(punishment,2)
-
+                    pos_value += math.log(punishment, 2)
 
                 if word in self.negative_inf:
-                    neg_value += math.log(self.negative_inf[word],2)
+                    neg_value += math.log(self.negative_inf[word], 2)
                 else:
                     neg_value += math.log(punishment, 2)
-
 
             if pos_value > neg_value:
                 positive.append(file)
@@ -213,7 +211,7 @@ class Text_Classifier():
                 negative.append(file)
         return positive, negative
 
-    def classify_folder(self,folder):
+    def classify_folder(self, folder):
         """
 
         :param folder: the folder which holds the folders neg and pos
@@ -233,9 +231,7 @@ def test(file):
 
     analyzer_1.analyze_Text()
 
-
     analyzer_1.prune(2)
-
 
     sort_1 = sorted(analyzer_1.positive.items(), key=operator.itemgetter(1), reverse=True)
     sort_2 = sorted(analyzer_1.negative.items(), key=operator.itemgetter(1), reverse=True)
@@ -244,28 +240,24 @@ def test(file):
     print(sort_2[:-25])
 
 
-
-
 def main():
-    analyzer = Information_analyzer("data/alle/train",n_grams_reader(3))
+    analyzer = Information_analyzer("data/alle/train", n_grams_reader(3))
     analyzer.analyze_Text()
     analyzer.prune(1)
 
     sort_1 = sorted(analyzer.positive.items(), key=operator.itemgetter(1), reverse=True)
     sort_2 = sorted(analyzer.negative.items(), key=operator.itemgetter(1), reverse=True)
 
-    print("length of pos %d"%(len(analyzer.positive)))
-    print("length of neg %d"%(len(analyzer.negative)))
+
 
     print(sort_1)
     print(sort_2)
 
-    classifier = Text_Classifier(analyzer.positive, analyzer.negative,n_grams_reader(3))
+    classifier = Text_Classifier(analyzer.positive, analyzer.negative, n_grams_reader(3))
     pos_correct, pos_false, neg_correct, neg_false = classifier.classify_folder("data/alle/test")
 
-
-    print("correct percentage:%d"%(100*(len(pos_correct)+len(neg_correct))/(len(pos_correct)+len(pos_false)+len(neg_correct)+len(neg_false))))
-
+    print("correct percentage:%d" % (100 * (len(pos_correct) + len(neg_correct)) / (
+    len(pos_correct) + len(pos_false) + len(neg_correct) + len(neg_false))))
 
     print(len(pos_correct))
     print(len(pos_false))
